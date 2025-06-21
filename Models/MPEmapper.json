@@ -1,0 +1,478 @@
+{
+       "IP0000T1": [
+           {"field":"tableid"      ,"length":9},
+           {"field":"description"  ,"length":27},
+           {"field":"keylength"    ,"length":5},
+           {"field":"keyofs"       ,"length":4},
+           {"field":"minlength"    ,"length":5},
+           {"field":"maxlength"    ,"length":5},
+           {"field":"version"      ,"length":8},
+           {"field":"createdate"   ,"length":12},
+           {"field":"modifieddate" ,"length":12},
+           {"field":"totalrows"    ,"length":8}
+       ],
+       "IP0006T1":  [
+              {"field":"CPI","length":3},
+              {"field":"ISO","length":3},
+              {"field":"name","length":57},
+              {"field":"format","length":3},
+              {"field":"MIN","length":3},
+              {"field":"MAX","length":3},
+              {"field":"MXI","length":3},
+              {"field":"lenSize","length":1},
+              {"field":"SubIndex","length":2}
+       ],
+       "IP0007T1":  [
+              {"field":"ISO","length":3},
+              {"field":"SubIndex","length":2},
+              {"field":"name","length":57},
+              {"field":"format","length":3},
+              {"field":"startOfset","length":3},
+              {"field":"MIN","length":3},
+              {"field":"MAX","length":3}
+       ],
+       "IP0008T1":  [
+              {"field":"PDS","length":4},
+              {"field":"name","length":57},
+              {"field":"foramt","length":3},
+              {"field":"MIN","length":3},
+              {"field":"MAX","length":3},
+              {"field":"subIndex","length":2}
+       ],
+       "IP0009T1":  [
+              {"field":"PDS","length":4},
+              {"field":"SUB","length":2},
+              {"field":"name","length":57},
+              {"field":"format","length":3},
+              {"field":"MIN","length":3},
+              {"field":"MAX","length":3},
+              {"field":"startOfset","length":3}
+       ],
+       "IP0015T1":  [
+              {"field":"ErrorCode","length":4},
+              {"field":"ErrorMessage","length":255}
+       ],
+       "IP0016T1":  [
+              {"field":"licenseProdId","length":3},
+              {"field":"ProdId","length":3},
+              {"field":"CPI","length":3},
+              {"field":"prodClass","length":3},
+              {"field":"prodType","length":1},
+              {"field":"prodCatCode","length":1},
+              {"field":"EUprodCatCat","length":1},
+              {"field":"commericalProdInd","length":1}
+       ],
+       "IP0017T1":  [
+              {"field":"ISOnum","length":3},
+              {"field":"ISOalpha3","length":3},
+              {"field":"exponent","length":1}
+       ],
+       "IP0018T1":  [
+              {"field":"acctCatCode","length":1},
+              {"field":"licprodId","length":3},
+              {"field":"ird","length":2},
+              {"field":"GCMSprodId","length":3},
+              {"field":"prodClass","length":3},
+              {"field":"prodType","length":1},
+              {"field":"acctCatCodeType","length":3},
+              {"field":"acctCatCodeLifeCycle","length":8},
+              {"field":"prodCodeLifeCycle","length":8}
+       ],       
+       "IP0019T1":  [
+                     {"field":"Brand","length":3},
+                     {"field":"BSAtype","length":1},
+                     {"field":"BSA","length":6},
+                     {"field":"ird","length":2},
+                     {"field":"licprodId","length":3},
+                     {"field":"acctCatCode","length":1},
+                     {"field":"acctCatCodeType","length":3},
+                     {"field":"acctCatCodeLifeCycle","length":8},
+                     {"field":"flag1","length":1},
+                     {"field":"flag2","length":1}
+       ],
+       "IP0020T1":  [
+              {"field":"posLicProdId","length":3},
+              {"field":"fundLicProdId","length":3},
+              {"field":"fundGCMSProdId","length":3},
+              {"field":"fundProdClass","length":3},
+              {"field":"fundType","length":1},
+              {"field":"fundCardProgId","length":3},
+              {"field":"ICFUswitch","length":1},
+              {"field":"Fswitch","length":1},
+              {"field":"Eswitch","length":1}
+       ],       
+       "IP0040T1":  [
+              {"field":"IssuerBinLow","length":19},
+              {"field":"ProdId","length":3},
+              {"field":"IssuerBinHi","length":19},
+              {"field":"CPI","length":3},
+              {"field":"ProrityIndex","length":2},
+              {"field":"MemberId","length":11},
+              {"field":"ProdType","length":1},
+              {"field":"Endpoint","length":7},
+              {"field":"CountryISO","length":3},
+              {"field":"CountryNUM","length":3},
+              {"field":"Region","length":1},
+              {"field":"ProdClass","length":3},
+              {"field":"Routing","length":1},
+              {"field":"FPRS","length":1},
+              {"field":"PRS","length":1},
+              {"field":"PurchaseWithCB","length":1},
+              {"field":"LicensedProductId","length":3},
+              {"field":"MappingSevice","length":1},
+              {"field":"ALM","length":1},
+              {"field":"ALMDate","length":6},
+              {"field":"BillingCCYdefault","length":3},
+              {"field":"BillingCCYexp","length":1},
+              {"array" :{
+                 "times" : 4 ,
+                 "name"  : "BillingCCY" ,
+                 "loop"  : [
+                   {"field":"BillingTransactionCCY","length":3},
+                   {"field":"BillingSettlementCCY" ,"length":3},
+                   {"field":"BillingExp","length":1}  
+                   ]  }
+              },
+              {"field":"Chip2MagService","length":1},
+              {"field":"FloorExpiryDate","length":6},
+              {"field":"CObranded","length":1},
+              {"field":"SpendControlSwitch","length":1},
+              {"field":"MCSP","length":3},
+              {"field":"MCAD","length":6},
+              {"field":"ContractlessEnabled","length":1},
+              {"field":"RRTI","length":1},
+              {"field":"PSNRouting","length":1},
+              {"field":"CashBackWithoutPurchase","length":1  },
+              {"field":"filler1","length":1},
+              {"field":"RPI","length":1},
+              {"field":"MoneySend","length":1},
+              {"field":"Durbin","length":1},
+              {"field":"CashOnly","length":1},
+              {"field":"AuthenticationInd","length":1},
+              {"field":"filler2","length":1},
+              {"field":"ITMPA","length":1},
+              {"field":"PSTDTE","length":1},
+              {"field":"MealVoucherInd","length":1},
+              {"field":"PrePaidNonReloadable","length":2},
+              {"field":"FastFund","length":1},
+              {"field":"PrePaidAnonymous","length":1},
+              {"field":"CardHolderCCYind","length":1},
+              {"field":"PayByAccount","length":1}
+       ],
+       "IP0041T1":  [
+              {"field":"acquirerId","length":6},
+              {"field":"CPI","length":3},
+              {"field":"memberId","length":11},
+              {"field":"FILLER","length":1},
+              {"field":"endPoint","length":7},
+              {"field":"POSEMVcomplianceInd","length":1},
+              {"field":"ATMEMVcomplianceInd","length":1},
+              {"field":"UCAF","length":1},
+              {"array" :{
+                     "times" : 6 ,
+                     "name"  : "regions" ,
+                     "loop"  : [
+                       {"field":"region","length":1}  
+                       ]  }
+              },
+              {"array" :{
+                     "times" : 20 ,
+                     "name"  : "countrys" ,
+                     "loop"  : [
+                       {"field":"country","length":3}  
+                       ]  }
+              }
+       ],
+       "IP0048T1":  [
+              {"field":"keySeq","length":11},
+              {"field":"memberId","length":11},
+              {"field":"SSLpriority","length":1},
+              {"field":"SScode","length":1},
+              {"field":"SSid","length":10},
+              {"field":"acctRefCode","length":9},
+              {"field":"transferAgent","length":11},
+              {"field":"filler","length":19},
+              {"field":"settlementCCY","length":3},
+              {"field":"settlementCCYexp","length":1}
+       ],
+       "IP0052T1":  [
+              {"field":"CPI","length":3},
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6},
+              {"field":"IRD","length":2},
+              {"field":"MTI","length":4},
+              {"field":"D24","length":3},
+              {"field":"D03","length":6},
+              {"field":"reversals","length":1},
+              {"field":"complianceSwitch","length":1},
+              {"field":"T53","length":11},
+              {"field":"ProductType","length":1},
+              {"field":"T59","length":11},
+              {"field":"T57","length":11},
+              {"field":"MCassignedManInd","length":1},
+              {"field":"MCvalidAssignedId","length":1},
+              {"field":"contactless","length":1}
+       ],
+       "IP0053T1":  [
+              {"field":"FeePointer","length":11},
+              {"field":"rateType","length":3},
+              {"field":"paymentParty","length":3},
+              {"field":"CCY","length":3},
+              {"field":"exp","length":1},
+              {"field":"filler","length":11},
+              {"field":"programType","length":4},
+              {"field":"feeTypeCode","length":2},
+              {"field":"FEESEG","length":2},
+              {"array" : {
+                     "times" : "FEESEG" ,
+                     "name"  : "FeesSegment" ,
+                     "loop"  : [
+                            {"field":"LOWAMT","length":15},
+                            {"field":"RATE","length":14},
+                            {"field":"RATEDIR","length":2},
+                            {"field":"UNITFEE","length":12},
+                            {"field":"MMDIR","length":2},
+                            {"field":"MINFEE","length":8},
+                            {"field":"MAXFEE","length":8}
+                       ]  }
+              }
+       ],  
+       "IP0056T1":  [
+              {"field":"FeePointer","length":11},
+              {"field":"BSApriority","length":2},
+              {"field":"BSAtype","length":1},
+              {"field":"BSAcode","length":6},
+              {"field":"BSAcpiPriority","length":2},
+              {"field":"CPI","length":3},
+              {"field":"BSAliftCycle","length":1}
+       ],
+       "IP0057T1":  [
+              {"field":"FeePointer","length":11},
+              {"field":"FeeOverride","length":11},
+              {"field":"prodClass","length":3},
+              {"field":"cab","length":4},
+              {"field":"MCassignId","length":6},
+              {"field":"OverideProirityCode","length":2},
+              {"field":"T53","length":11}
+       ],
+       "IP0058T1":  
+              [
+              {"FullOnly":true},              
+              {"mode":"fullonly"}, 
+              {"field":"CPI","length":3},
+              {"field":"CBtype","length":1},
+              {"field":"MCC","length":5},
+              {"field":"region","length":1},
+              {"field":"countryNum","length":3},
+              {"field":"countryISO3","length":3},
+              {"field":"CCYnum","length":3},
+              {"field":"CCYiso3","length":3},
+              {"field":"CCYexponent","length":1},
+              {"field":"CBprotectionAmt","length":12}
+       ],
+       "IP0059T1":  [
+              {"field":"FeePointer","length":11},
+              {"field":"SystemApplication","length":1},
+              {"array" : {
+                     "times" : 2 ,
+                     "name"  : "TimeFrame" ,
+                     "loop"  : [
+                            {"field":"Airline","length":1},
+                            {"field":"SubTimeFrame","length":4},
+                            {"field":"NonProcDays","length":1},
+                            {"field":"Holiday","length":1},
+                            {"field":"DateExclusion","length":1},
+                            {"field":"HeaderProcessingDateExclusion","length":1},
+                            {"field":"AuthorisationInd","length":1}
+                       ]  }
+              },
+              {"field":"Holiday","length":1},
+              {"field":"DateExclusion","length":1},
+              {"field":"HeaderProcessingDateExclusion","length":1},
+              {"field":"AuthorisationInd","length":1}
+       ],
+       "IP0069T1":  [
+              {"field":"GlobalCCY","length":3},
+              {"field":"exp","length":1}
+       ],
+       "IP0072T1":  [
+              {"field":"MEMBER","length":11},
+              {"field":"F1","length":2},
+              {"field":"REG","length":1},
+              {"field":"IEI","length":2},
+              {"field":"INTMEMIND","length":1},
+              {"field":"SWITCH","length":1},
+              {"field":"ATM","length":1},
+              {"field":"RCL","length":1},
+              {"field":"ENDP","length":7},
+              {"field":"CBSWTCH","length":1},
+              {"field":"MCCGRP1","length":1},
+              {"field":"MCCGRP2","length":1},
+              {"field":"MCCGRP3","length":1},
+              {"field":"MCCGRP4","length":1},
+              {"field":"MCCGRP5","length":1},
+              {"field":"F2","length":1},
+              {"field":"MERNAME","length":30},
+              {"field":"CCODE","length":3},
+              {"field":"CCISO","length":3},
+              {"field":"F3","length":21},
+              {"field":"OFMT","length":1},
+              {"field":"MECI","length":1},
+              {"field":"EEA","length":1},
+              {"field":"F4","length":1},
+              {"field":"NPGPS","length":1},
+              {"field":"PTAPI","length":1}
+       ],   
+       "IP0075T1":  [
+              {"field":"filler","length":1},
+              {"field":"MCC","length":4},
+              {"field":"CAB","length":4},
+              {"field":"life","length":1},
+              {"field":"MCCtype","length":1},
+              {"field":"flag","length":1}
+       ],
+       "ZP0078T1":  [
+              {"field":"CPI","length":3},
+              {"field":"BSAT","length":1},
+              {"field":"BSC","length":6},
+              {"field":"MTYPE","length":1},
+              {"field":"MCPI","length":3},
+              {"field":"MBSAT","length":1},
+              {"field":"MBS","length":6}
+       ],
+       "IP0087T1":  [
+              {"field":"CPI","length":3},
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6},
+              {"field":"IRD","length":2},
+              {"field":"maskedCPI","length":3},
+              {"field":"maskedBSAtype","length":1},
+              {"field":"maskedBSA","length":6},
+              {"field":"maskedIRD","length":2}
+       ],
+       "IP0088T1":  [
+              {"field":"CPI","length":3},
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6},
+              {"field":"maskedType","length":1},
+              {"field":"maskedCPI","length":3},
+              {"field":"maskedBSAtype","length":1},
+              {"field":"maskedBSA","length":6}
+       ],
+       "IP0089T1":  [
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6},
+              {"field":"filler","length":4},
+              {"field":"centralAcqSwitch","length":1}
+       ],
+       "IP0090T1":  [
+              {"field":"BinLow","length":19},
+              {"field":"BSApriority","length":1},
+              {"field":"BSAagreement","length":6},
+              {"field":"CPI","length":3},
+              {"field":"BinHi","length":19},
+              {"field":"CPIpriority","length":2},
+              {"field":"unknown","length":2},
+              {"field":"LifeCycleInd","length":1},
+              {"field":"EnforcementInd","length":1}
+       ],
+       "IP0091T1":  [
+              {"field":"AcquirerBin","length":6},
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6},
+              {"field":"CPI","length":3},
+              {"field":"priority","length":2}, 
+              {"field":"LifeCycleInd","length":1},
+              {"field":"xxx","length":3}
+       ],
+       "IP0092T1":  [
+              {"field":"MTI","length":4},
+              {"field":"D24","length":3},
+              {"field":"busServiveProcSwitch","length":1}
+       ],
+       "IP0093T1":  [
+              {"field":"accountRange","length":6},
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6}
+       ],
+       "IP0094T1":  [
+              {"mode":"skip"},
+              {"field":"CPI","length":3},
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6},
+              {"array" : {
+                     "times" : 99,
+                     "name"  : "cntyOveride" ,
+                     "loop"  : [
+                            {"field":"Country","length":3},
+                            {"field":"life","length":1}
+                       ]  }
+              }, 
+              {"array" : {
+                     "times" : 6,
+                     "name"  : "regionOveride" ,
+                     "loop"  : [
+                            {"field":"region","length":1},
+                            {"field":"life","length":1}
+                       ]  }
+              } 
+       ],
+       "IP0095T1":  [
+              {"field":"CPI","length":3},
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6},
+              {"field":"IRD","length":2},
+              {"field":"CAB","length":4},
+              {"field":"life","length":1}
+       ], 
+       "IP0096T1":  [
+              {"seq":"seq"},
+              {"field":"CPI","length":3},
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6},
+              {"field":"IRD","length":2},
+              {"field":"prodId","length":3},
+              {"field":"life","length":1}
+       ], 
+
+       "IP0097T1":  [
+              {"field":"CPI","length":3},
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6},
+              {"field":"MTI","length":4},
+              {"field":"FUNC","length":3},
+              {"field":"D025","length":4},
+              {"field":"REV","length":1},
+              {"field":"CBDOC","length":1},
+              {"field":"FPIS","length":1},
+              {"field":"FCMA","length":12},
+              {"field":"FCMC","length":3},
+              {"field":"FCMAE","length":1}
+       ],       
+       "IP0098T1": [
+              {"field":"CPI","length":3},
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6},
+              {"field":"MTI","length":4},
+              {"field":"D24","length":3},
+              {"field":"D03","length":6},
+              {"field":"REV","length":1},
+              {"field":"IRD","length":1},
+              {"field":"EDII","length":1},
+              {"field":"EROS","length":1}
+       ],
+       "IP0099T1": [
+              {"field":"CPI","length":3},
+              {"field":"BSAtype","length":1},
+              {"field":"BSA","length":6},
+              {"field":"CCY","length":3}
+       ],
+       "IP0137T1": [
+              {"field":"LOW","length":16},
+              {"field":"HI","length":16},
+              {"field":"REG","length":1},
+              {"field":"CPI","length":3},
+              {"field":"BSA","length":3},
+              {"field":"PLUS","length":1}
+       ]       
+}

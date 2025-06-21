@@ -1,0 +1,61 @@
+services:
+  # PostgreSQL:
+  #   image: postgres:17
+  #   container_name: postgresql
+  #   restart: unless-stopped
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/17
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_DB=postgres
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #   networks:
+  #     dumb-network:
+  #       aliases:
+  #         - postgres4me
+
+  redis:
+    image: "redis:alpine"
+    command: redis-server --requirepass sOmE_sEcUrE_pAsS
+    container_name: redis
+
+    ports:
+     - "6379:6379"
+
+    volumes:
+      - $PWD/redis-data:/var/lib/redis
+      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+
+    environment:
+     - REDIS_REPLICATION_MODE=master
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: p@p.com
+      PGADMIN_DEFAULT_PASSWORD: p@p.com
+    ports:
+      - "5050:80"
+    # depends_on:
+    #   - PostgreSQL
+    restart: unless-stopped
+    networks:
+      dumb-network:
+        aliases:
+          - postgres4me    
+
+volumes:
+  postgres_data:
+
+networks:
+  dumb-network:
+    driver: bridge

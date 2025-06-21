@@ -1,0 +1,15 @@
+# working - Holds decoded decompressed MPE files
+# new     - Holds the Full T068/168 & Upd T067/167 compressed MPE files
+# ixmp    - Hold the Extracted Batch IXMPE working File
+
+PRODUCTION :
+  working :   /aci_cmm/ACI01/ICG/NETCT/files/LandingArea/Bin/wrk
+  ixmp    :   /aci_cmm/ACI01/ICG/NETCT/files/LandingArea/Bin/wrk
+  new     :   /aci_cmm/ACI01/ICG/NETCT/files/LandingArea/Bin
+  database:   postgresql://user:postgres@localhost:5432/MPE'
+
+TEST :
+  working :   data/wrk
+  new     :   data/new
+  ixmp    :   data
+
