@@ -58,7 +58,7 @@ class TMPE006(Base):
     subindex = Column(String(2))
 
 class TMPE007(Base):
-    __tablename__ = 'TMPE007'
+    __tablename__ = 'tmpe007'
     __table_args__ = (
         PrimaryKeyConstraint('iso','subindex'),
             {'prefixes': ['UNLOGGED']}     # This sets the table as UNLOGGED
@@ -72,539 +72,550 @@ class TMPE007(Base):
     max = Column(String(3))
 
 class TMPE008(Base):
-    __tablename__ = 'TMPE008'
-    id = Column(Integer, primary_key=True)
-    PDS = Column(String(4))
+    __tablename__ = 'tmpe008'
+    __table_args__ = (
+        PrimaryKeyConstraint('pds','subindex'),
+            {'prefixes': ['UNLOGGED']}     # This sets the table as UNLOGGED
+        )
+    pds = Column(String(4))
     name = Column(String(57))
-    foramt = Column(String(3))  # Note: 'foramt' might be a typo for 'format'
-    MIN = Column(String(3))
-    MAX = Column(String(3))
-    subIndex = Column(String(2))
+    format = Column(String(3))  
+    min = Column(String(3))
+    max = Column(String(3))
+    subindex = Column(String(2))
 
 class TMPE009(Base):
-    __tablename__ = 'TMPE009'
-    id = Column(Integer, primary_key=True)
-    PDS = Column(String(4))
-    SUB = Column(String(2))
+    __tablename__ = 'tmpe009'
+    __table_args__ = (
+        PrimaryKeyConstraint('pds','sub'),
+            {'prefixes': ['UNLOGGED']}     # This sets the table as UNLOGGED
+        )    
+    pds = Column(String(4))
+    sub = Column(String(2))
     name = Column(String(57))
     format = Column(String(3))
-    MIN = Column(String(3))
-    MAX = Column(String(3))
-    startOfset = Column(String(3))
+    min = Column(String(3))
+    max = Column(String(3))
+    startofset = Column(String(3))
 
 class TMPE015(Base):
-    __tablename__ = 'TMPE015'
-    ErrorCode = Column(String(4), primary_key=True)
-    ErrorMessage = Column(String(255))
-
+    __tablename__ = 'tmpe015'
+    __table_args__ = (
+        PrimaryKeyConstraint('errorcode'),
+            {'prefixes': ['UNLOGGED']}     # This sets the table as UNLOGGED
+        )   
+    errorcode = Column(String(4), primary_key=True)
+    errormessage = Column(String(255))
 
 class TMPE016(Base):
-    __tablename__ = 'TMPE016'
-    licenseProdId = Column(String(3), primary_key=True)
-    ProdId = Column(String(3))
-    CPI = Column(String(3))
-    prodClass = Column(String(3))
-    prodType = Column(String(1))
-    prodCatCode = Column(String(1))
-    EUprodCatCat = Column(String(1))
-    commericalProdInd = Column(String(1))
+    __tablename__ = 'tmpe016'
+    __table_args__ = (
+        PrimaryKeyConstraint('licenseprodid','prodid','cpi'),
+            {'prefixes': ['UNLOGGED']}     # This sets the table as UNLOGGED
+        )     
+    licenseprodid = Column(String(3))
+    prodid = Column(String(3))
+    cpi = Column(String(3))
+    prodclass = Column(String(3))
+    prodtype = Column(String(1))
+    prodcatcode = Column(String(1))
+    euprodcatcat = Column(String(1))
+    commericalprodind = Column(String(1))
 
 class TMPE017(Base):
-    __tablename__ = 'TMPE017'
-    ISOnum = Column(String(3), primary_key=True)
-    ISOalpha3 = Column(String(3))
+    __tablename__ = 'tmpe017'
+    __table_args__ = (
+        PrimaryKeyConstraint('isonum'),
+            {'prefixes': ['UNLOGGED']}     # This sets the table as UNLOGGED
+        )    
+    isonum = Column(String(3), primary_key=True)
+    isoalpha3 = Column(String(3))
     exponent = Column(String(1))
 
 class TMPE018(Base):
-    __tablename__ = 'TMPE018'
-    acctCatCode = Column(String(1), primary_key=True)
-    licprodId = Column(String(3))
+    __tablename__ = 'tmpe018'
+    __table_args__ = (
+        PrimaryKeyConstraint('licprodid','acctcatcode'),
+            {'prefixes': ['UNLOGGED']}     # This sets the table as UNLOGGED
+        )       
+    acctcatcode = Column(String(1))
+    licprodid = Column(String(3))
     ird = Column(String(2))
-    GCMSprodId = Column(String(3))
-    prodClass = Column(String(3))
-    prodType = Column(String(1))
-    acctCatCodeType = Column(String(3))
-    acctCatCodeLifeCycle = Column(String(8))
-    prodCodeLifeCycle = Column(String(8))
+    gcmsprodid = Column(String(3))
+    prodclass = Column(String(3))
+    prodtype = Column(String(1))
+    acctcatcodetype = Column(String(3))
+    acctcatcodelifecycle = Column(String(8))
+    prodcodelifecycle = Column(String(8))
 
 class TMPE019(Base):
-    __tablename__ = 'TMPE019'
-    Brand = Column(String(3), primary_key=True)
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
+    __tablename__ = 'tmpe019'
+    __table_args__ = (
+        PrimaryKeyConstraint('bsa','brand','ird','licprodid','acctcatcode'),
+            {'prefixes': ['UNLOGGED']}     # This sets the table as UNLOGGED
+        )
+    brand = Column(String(3))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
     ird = Column(String(2))
-    licprodId = Column(String(3))
-    acctCatCode = Column(String(1))
-    acctCatCodeType = Column(String(3))
-    acctCatCodeLifeCycle = Column(String(8))
+    licprodid = Column(String(3))
+    acctcatcode = Column(String(1))
+    acctcatcodetype = Column(String(3))
+    acctcatcodelifecycle = Column(String(8))
     flag1 = Column(String(1))
     flag2 = Column(String(1))
 
 class TMPE020(Base):
-    __tablename__ = 'TMPE020'
-    posLicProdId = Column(String(3), primary_key=True)
-    fundLicProdId = Column(String(3))
-    fundGCMSProdId = Column(String(3))
-    fundProdClass = Column(String(3))
-    fundType = Column(String(1))
-    fundCardProgId = Column(String(3))
-    ICFUswitch = Column(String(1))
-    Fswitch = Column(String(1))
-    Eswitch = Column(String(1))
+    __tablename__ = 'tmpe020'
+    __table_args__ = (
+        PrimaryKeyConstraint('poslicprodid','fundlicprodid','fundgcmsprodid'),
+            {'prefixes': ['UNLOGGED']}     # This sets the table as UNLOGGED
+        )    
+    poslicprodid = Column(String(3))
+    fundlicprodid = Column(String(3))
+    fundgcmsprodid = Column(String(3))
+    fundprodclass = Column(String(3))
+    fundtype = Column(String(1))
+    fundcardprogid = Column(String(3))
+    icfuswitch = Column(String(1))
+    fswitch = Column(String(1))
+    eswitch = Column(String(1))
+
+class TMPE040(Base):
+    __tablename__ = 'tmpe040'
+    __table_args__ = (
+        PrimaryKeyConstraint('issuerbinlow','issuerbinhi','cpi','prodid'),
+            {'prefixes': ['UNLOGGED']}     # This sets the table as UNLOGGED
+        )    
+    id = Column(Integer)  
+    issuerbinlow = Column(String(19))
+    prodid = Column(String(3))
+    issuerbinhi = Column(String(19))
+    cpi = Column(String(3))
+    prorityindex = Column(String(2))
+    memberid = Column(String(11))
+    prodtype = Column(String(1))
+    endpoint = Column(String(7))
+    countryiso = Column(String(3))
+    countrynum = Column(String(3))
+    region = Column(String(1))
+    prodclass = Column(String(3))
+    routing = Column(String(1))
+    fprs = Column(String(1))
+    prs = Column(String(1))
+    purchasewithcb = Column(String(1))
+    licensedproductid = Column(String(3))
+    mappingsevice = Column(String(1))
+    alm = Column(String(1))
+    almdate = Column(String(6))
+    billingccydefault = Column(String(3))
+    billingccyexp = Column(String(1))
+    chip2magservice = Column(String(1))
+    floorexpirydate = Column(String(6))
+    cobranded = Column(String(1))
+    spendcontrolswitch = Column(String(1))
+    mcsp = Column(String(3))
+    mcad = Column(String(6))
+    contractlessenabled = Column(String(1))
+    rrti = Column(String(1))
+    psnrouting = Column(String(1))
+    cashbackwithoutpurchase = Column(String(1))
+    filler1 = Column(String(1))
+    rpi = Column(String(1))
+    moneysend = Column(String(1))
+    durbin = Column(String(1))
+    cashonly = Column(String(1))
+    authenticationind = Column(String(1))
+    filler2 = Column(String(1))
+    itmpa = Column(String(1))
+    pstdte = Column(String(1))
+    mealvoucherind = Column(String(1))
+    prepaidnonreloadable = Column(String(2))
+    fastfund = Column(String(1))
+    prepaidanonymous = Column(String(1))
+    cardholderccyind = Column(String(1))
+    paybyaccount = Column(String(1))
+ 
+    billingccy = Column(JSON)
 
  
-class TMPE040(Base):
-    __tablename__ = 'TMPE040'
-    id = Column(Integer, primary_key=True)
-    IssuerBinLow = Column(String(19))
-    ProdId = Column(String(3))
-    IssuerBinHi = Column(String(19))
-    CPI = Column(String(3))
-    ProrityIndex = Column(String(2))
-    MemberId = Column(String(11))
-    ProdType = Column(String(1))
-    Endpoint = Column(String(7))
-    CountryISO = Column(String(3))
-    CountryNUM = Column(String(3))
-    Region = Column(String(1))
-    ProdClass = Column(String(3))
-    Routing = Column(String(1))
-    FPRS = Column(String(1))
-    PRS = Column(String(1))
-    PurchaseWithCB = Column(String(1))
-    LicensedProductId = Column(String(3))
-    MappingSevice = Column(String(1))
-    ALM = Column(String(1))
-    ALMDate = Column(String(6))
-    BillingCCYdefault = Column(String(3))
-    BillingCCYexp = Column(String(1))
-    Chip2MagService = Column(String(1))
-    FloorExpiryDate = Column(String(6))
-    CObranded = Column(String(1))
-    SpendControlSwitch = Column(String(1))
-    MCSP = Column(String(3))
-    MCAD = Column(String(6))
-    ContractlessEnabled = Column(String(1))
-    RRTI = Column(String(1))
-    PSNRouting = Column(String(1))
-    CashBackWithoutPurchase = Column(String(1))
-    filler1 = Column(String(1))
-    RPI = Column(String(1))
-    MoneySend = Column(String(1))
-    Durbin = Column(String(1))
-    CashOnly = Column(String(1))
-    AuthenticationInd = Column(String(1))
-    filler2 = Column(String(1))
-    ITMPA = Column(String(1))
-    PSTDTE = Column(String(1))
-    MealVoucherInd = Column(String(1))
-    PrePaidNonReloadable = Column(String(2))
-    FastFund = Column(String(1))
-    PrePaidAnonymous = Column(String(1))
-    CardHolderCCYind = Column(String(1))
-    PayByAccount = Column(String(1))
-    billing_ccy = relationship("BillingCCY", back_populates="parent", cascade="all, delete-orphan")
-
-class BillingCCY(Base):
-    __tablename__ = 'billing_ccy'
-
-    id = Column(Integer, primary_key=True)
-    parent_id = Column(Integer, ForeignKey('TMPE040.id'))
-    BillingTransactionCCY = Column(String(3))
-    BillingSettlementCCY = Column(String(3))
-    BillingExp = Column(String(1))
-    parent = relationship("TMPE040", back_populates="billing_ccy")
-
 class TMPE041(Base):
-    __tablename__ = 'TMPE041'
-
-    id = Column(Integer, primary_key=True)
-    acquirerId = Column(String(6))
-    CPI = Column(String(3))
-    memberId = Column(String(11))
-    FILLER = Column(String(1))
-    endPoint = Column(String(7))
-    POSEMVcomplianceInd = Column(String(1))
-    ATMEMVcomplianceInd = Column(String(1))
-    UCAF = Column(String(1))
-
-    regions = relationship("Region", back_populates="parent", cascade="all, delete-orphan")
-    countrys = relationship("Country", back_populates="parent", cascade="all, delete-orphan")
-
-
-class Region(Base):
-    __tablename__ = 'region'
-    id = Column(Integer, primary_key=True)
-    parent_id = Column(Integer, ForeignKey('TMPE041.id'))
-    region = Column(String(1))
-
-    parent = relationship("TMPE041", back_populates="regions")
-
-class Country(Base):
-    __tablename__ = 'country'
-    id = Column(Integer, primary_key=True)
-    parent_id = Column(Integer, ForeignKey('TMPE041.id'))
-    country = Column(String(3))
-    parent = relationship("TMPE041", back_populates="countrys")
+    __tablename__ = 'tmpe041'
+    __table_args__ = (
+        PrimaryKeyConstraint('acquirerid','memberid','cpi'),
+            {'prefixes': ['UNLOGGED']}     # This sets the table as UNLOGGED
+        )    
+    acquirerid = Column(String(6))
+    cpi = Column(String(3))
+    memberid = Column(String(11))
+    filler = Column(String(1))
+    endpoint = Column(String(7))
+    posemvcomplianceind = Column(String(1))
+    atmemvcomplianceind = Column(String(1))
+    ucaf = Column(String(1))
+    regions = Column(JSON)
+    countrys = Column(JSON)
 
 class TMPE048(Base):
-    __tablename__ = 'TMPE048'
-
-    id = Column(Integer, primary_key=True)
-    keySeq = Column(String(11))
-    memberId = Column(String(11))
-    SSLpriority = Column(String(1))
-    SScode = Column(String(1))
-    SSid = Column(String(10))
-    acctRefCode = Column(String(9))
-    transferAgent = Column(String(11))
+    __tablename__ = 'tmpe048'
+    __table_args__ = (
+        PrimaryKeyConstraint('keyseq','memberid','sslpriority','sscode','ssid','acctrefcode','transferagent','settlementccy'),
+            {'prefixes': ['UNLOGGED']}
+        )  
+    keyseq = Column(String(11))
+    memberid = Column(String(11))
+    sslpriority = Column(String(1))
+    sscode = Column(String(1))
+    ssid = Column(String(10))
+    acctrefcode = Column(String(9))
+    transferagent = Column(String(11))
     filler = Column(String(19))
-    settlementCCY = Column(String(3))
-    settlementCCYexp = Column(String(1))
+    settlementccy = Column(String(3))
+    settlementccyexp = Column(String(1))
 
 
 class TMPE052(Base):
-    __tablename__ = 'TMPE052'
-
-    id = Column(Integer, primary_key=True)
-    CPI = Column(String(3))
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
-    IRD = Column(String(2))
-    MTI = Column(String(4))
-    D24 = Column(String(3))
-    D03 = Column(String(6))
+    __tablename__ = 'tmpe052'
+    __table_args__ = (
+        PrimaryKeyConstraint('bsatype','bsa','cpi','d03','d24','ird'),
+            {'prefixes': ['UNLOGGED']}
+        )  
+    cpi = Column(String(3))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
+    ird = Column(String(2))
+    mti = Column(String(4))
+    d24 = Column(String(3))
+    d03 = Column(String(6))
     reversals = Column(String(1))
-    complianceSwitch = Column(String(1))
-    T53 = Column(String(11))
-    ProductType = Column(String(1))
-    T59 = Column(String(11))
-    T57 = Column(String(11))
-    MCassignedManInd = Column(String(1))
-    MCvalidAssignedId = Column(String(1))
+    complianceswitch = Column(String(1))
+    t53 = Column(String(11))
+    producttype = Column(String(1))
+    t59 = Column(String(11))
+    t57 = Column(String(11))
+    mcassignedmanind = Column(String(1))
+    mcvalidassignedid = Column(String(1))
     contactless = Column(String(1))
 
 class TMPE053(Base):
-    __tablename__ = 'TMPE053'
-
-    id = Column(Integer, primary_key=True)
-    FeePointer = Column(String(11))
-    rateType = Column(String(3))
-    paymentParty = Column(String(3))
-    CCY = Column(String(3))
+    __tablename__ = 'tmpe053'
+    __table_args__ = (
+        PrimaryKeyConstraint('feepointer','paymentparty','ccy','ratetype','feetypecode'),
+            {'prefixes': ['UNLOGGED']}
+        )
+    feepointer = Column(String(11))
+    ratetype = Column(String(3))
+    paymentparty = Column(String(3))
+    ccy = Column(String(3))
     exp = Column(String(1))
     filler = Column(String(11))
-    programType = Column(String(4))
-    feeTypeCode = Column(String(2))
-    FEESEG = Column(String(2))  # Could be Integer if numeric
+    programtype = Column(String(4))
+    feetypecode = Column(String(2))
+    feeseg = Column(String(2))
+    feessegment = Column(JSON)
 
-    fees_segments = relationship("FeesSegment", back_populates="parent", cascade="all, delete-orphan")
-
-class FeesSegment(Base):
-    __tablename__ = 'fees_segment'
-    id = Column(Integer, primary_key=True)
-    parent_id = Column(Integer, ForeignKey('TMPE053.id'))
-    LOWAMT = Column(String(15))
-    RATE = Column(String(14))
-    RATEDIR = Column(String(2))
-    UNITFEE = Column(String(12))
-    MMDIR = Column(String(2))
-    MINFEE = Column(String(8))
-    MAXFEE = Column(String(8))
-    parent = relationship("TMPE053", back_populates="fees_segments")
 
 class TMPE056(Base):
-    __tablename__ = 'TMPE056'
-
+    __tablename__ = 'tmpe056'
     id = Column(Integer, primary_key=True)
-    FeePointer = Column(String(11))
-    BSApriority = Column(String(2))
-    BSAtype = Column(String(1))
-    BSAcode = Column(String(6))
-    BSAcpiPriority = Column(String(2))
-    CPI = Column(String(3))
-    BSAliftCycle = Column(String(1))
+    feepointer = Column(String(11))
+    bsapriority = Column(String(2))
+    bsatype = Column(String(1))
+    bsacode = Column(String(6))
+    bsacpipriority = Column(String(2))
+    cpi = Column(String(3))
+    bsaliftcycle = Column(String(1))
 
 class TMPE057(Base):
-    __tablename__ = 'TMPE057'
-
+    __tablename__ = 'tmpe057'
     id = Column(Integer, primary_key=True)
-    FeePointer = Column(String(11))
-    FeeOverride = Column(String(11))
-    prodClass = Column(String(3))
+    feepointer = Column(String(11))
+    feeoverride = Column(String(11))
+    prodclass = Column(String(3))
     cab = Column(String(4))
-    MCassignId = Column(String(6))
-    OverideProirityCode = Column(String(2))
-    T53 = Column(String(11))
+    mcassignid = Column(String(6))
+    overideproiritycode = Column(String(2))
+    t53 = Column(String(11))
 
 class TMPE058(Base):
-    __tablename__ = 'TMPE058'
-
-    id = Column(Integer, primary_key=True)
-    CPI = Column(String(3))
-    CBtype = Column(String(1))
-    MCC = Column(String(5))
+    __tablename__ = 'tmpe058'
+    id = Column(Integer, primary_key=True)  
+    cpi = Column(String(3))
+    cbtype = Column(String(1))
+    mcc = Column(String(5))
     region = Column(String(1))
-    countryNum = Column(String(3))
-    countryISO3 = Column(String(3))
-    CCYnum = Column(String(3))
-    CCYiso3 = Column(String(3))
-    CCYexponent = Column(String(1))
-    CBprotectionAmt = Column(String(12))
+    countrynum = Column(String(3))
+    countryiso3 = Column(String(3))
+    ccynum = Column(String(3))
+    ccyiso3 = Column(String(3))
+    ccyexponent = Column(String(1))
+    cbprotectionamt = Column(String(12))
 
 class TMPE059(Base):
-    __tablename__ = 'TMPE059'
+    __tablename__ = 'tmpe059'
     id = Column(Integer, primary_key=True)
-    FeePointer = Column(String(11))
-    SystemApplication = Column(String(1))
-    Holiday = Column(String(1))
-    DateExclusion = Column(String(1))
-    HeaderProcessingDateExclusion = Column(String(1))
-    AuthorisationInd = Column(String(1))
-    timeframes = relationship("TimeFrame", back_populates="parent", cascade="all, delete-orphan")
+    feepointer = Column(String(11))
+    systemapplication = Column(String(1))
+    holiday = Column(String(1))
+    dateexclusion = Column(String(1))
+    headerprocessingdateexclusion = Column(String(1))
+    authorisationind = Column(String(1))
+    timeframe = Column(JSON)
 
-class TimeFrame(Base):
-    __tablename__ = 'timeframe'
-    id = Column(Integer, primary_key=True)
-    parent_id = Column(Integer, ForeignKey('TMPE059.id'))
-    Airline = Column(String(1))
-    SubTimeFrame = Column(String(4))
-    NonProcDays = Column(String(1))
-    Holiday = Column(String(1))
-    DateExclusion = Column(String(1))
-    HeaderProcessingDateExclusion = Column(String(1))
-    AuthorisationInd = Column(String(1))
-    parent = relationship("TMPE059", back_populates="timeframes")
-
+ 
 class TMPE069(Base):
-    __tablename__ = 'TMPE069'
-
-    id = Column(Integer, primary_key=True)
-    GlobalCCY = Column(String(3))
+    __tablename__ = 'tmpe069'
+    __table_args__ = (
+        PrimaryKeyConstraint('globalccy'),
+            {'prefixes': ['UNLOGGED']}
+        )    
+    globalccy = Column(String(3))
     exp = Column(String(1))
 
-class TMPE072(Base):
-    __tablename__ = 'TMPE072'
 
-    id = Column(Integer, primary_key=True)
-    MEMBER = Column(String(11))
-    F1 = Column(String(2))
-    REG = Column(String(1))
-    IEI = Column(String(2))
-    INTMEMIND = Column(String(1))
-    SWITCH = Column(String(1))
-    ATM = Column(String(1))
-    RCL = Column(String(1))
-    ENDP = Column(String(7))
-    CBSWTCH = Column(String(1))
-    MCCGRP1 = Column(String(1))
-    MCCGRP2 = Column(String(1))
-    MCCGRP3 = Column(String(1))
-    MCCGRP4 = Column(String(1))
-    MCCGRP5 = Column(String(1))
-    F2 = Column(String(1))
-    MERNAME = Column(String(30))
-    CCODE = Column(String(3))
-    CCISO = Column(String(3))
-    F3 = Column(String(21))
-    OFMT = Column(String(1))
-    MECI = Column(String(1))
-    EEA = Column(String(1))
-    F4 = Column(String(1))
-    NPGPS = Column(String(1))
-    PTAPI = Column(String(1))
+class TMPE072(Base):
+    __tablename__ = 'tmpe072'
+    __table_args__ = (
+        PrimaryKeyConstraint('reg','iei'),
+            {'prefixes': ['UNLOGGED']}
+        )    
+    member = Column(String(11))
+    f1 = Column(String(2))
+    reg = Column(String(1))
+    iei = Column(String(2))
+    intmemind = Column(String(1))
+    switch = Column(String(1))
+    atm = Column(String(1))
+    rcl = Column(String(1))
+    endp = Column(String(7))
+    cbswtch = Column(String(1))
+    mccgrp1 = Column(String(1))
+    mccgrp2 = Column(String(1))
+    mccgrp3 = Column(String(1))
+    mccgrp4 = Column(String(1))
+    mccgrp5 = Column(String(1))
+    f2 = Column(String(1))
+    mername = Column(String(30))
+    ccode = Column(String(3))
+    cciso = Column(String(3))
+    f3 = Column(String(21))
+    ofmt = Column(String(1))
+    meci = Column(String(1))
+    eea = Column(String(1))
+    f4 = Column(String(1))
+    npgps = Column(String(1))
+    ptapi = Column(String(1))
+
 
 class TMPE075(Base):
-    __tablename__ = 'TMPE075'
-
-    id = Column(Integer, primary_key=True)
+    __tablename__ = 'tmpe075'
+    __table_args__ = (
+        PrimaryKeyConstraint('mcc','cab'),
+            {'prefixes': ['UNLOGGED']}
+        )  
     filler = Column(String(1))
-    MCC = Column(String(4))
-    CAB = Column(String(4))
+    mcc = Column(String(4))
+    cab = Column(String(4))
     life = Column(String(1))
-    MCCtype = Column(String(1))
+    mcctype = Column(String(1))
     flag = Column(String(1))
 
 class TMPE078(Base):
-    __tablename__ = 'TMPE078'
-    id = Column(Integer, primary_key=True)
-    CPI = Column(String(3))
-    BSAT = Column(String(1))
-    BSC = Column(String(6))
-    MTYPE = Column(String(1))
-    MCPI = Column(String(3))
-    MBSAT = Column(String(1))
-    MBS = Column(String(6))
+    __tablename__ = 'tmpe078'
+    __table_args__ = (
+        PrimaryKeyConstraint('mcc','cab','cpi'),
+            {'prefixes': ['UNLOGGED']}
+        )  
+    mcc = Column(String(10))
+    cab = Column(String(10))
+    cpi = Column(String(3))
+    bsat = Column(String(1))
+    bsc = Column(String(6))
+    mtype = Column(String(1))
+    mcpi = Column(String(3))
+    mbsat = Column(String(1))
+    mbs = Column(String(6))
 
 class TMPE087(Base):
-    __tablename__ = 'TMPE087'
-
-    id = Column(Integer, primary_key=True)
-    CPI = Column(String(3))
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
-    IRD = Column(String(2))
-    maskedCPI = Column(String(3))
-    maskedBSAtype = Column(String(1))
-    maskedBSA = Column(String(6))
-    maskedIRD = Column(String(2))
+    __tablename__ = 'tmpe087'
+    __table_args__ = (
+        PrimaryKeyConstraint('bsatype','bsa','cpi','ird'),
+            {'prefixes': ['UNLOGGED']}
+        )  
+    cpi = Column(String(3))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
+    ird = Column(String(2))
+    maskedcpi = Column(String(3))
+    maskedbsatype = Column(String(1))
+    maskedbsa = Column(String(6))
+    maskedird = Column(String(2))
 
 class TMPE088(Base):
-    __tablename__ = 'TMPE088'
-
-    id = Column(Integer, primary_key=True)
-    CPI = Column(String(3))
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
-    maskedType = Column(String(1))
-    maskedCPI = Column(String(3))
-    maskedBSAtype = Column(String(1))
-    maskedBSA = Column(String(6))
+    __tablename__ = 'tmpe088'
+    __table_args__ = (
+        PrimaryKeyConstraint('bsatype','bsa','cpi'),
+            {'prefixes': ['UNLOGGED']}
+        )      
+    cpi = Column(String(3))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
+    maskedtype = Column(String(1))
+    maskedcpi = Column(String(3))
+    maskedbsatype = Column(String(1))
+    maskedbsa = Column(String(6))
 
 class TMPE089(Base):
-    __tablename__ = 'TMPE089'
-
-    id = Column(Integer, primary_key=True)
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
+    __tablename__ = 'tmpe089'
+    __table_args__ = (
+        PrimaryKeyConstraint('bsatype','bsa'),
+            {'prefixes': ['UNLOGGED']}
+        )    
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
     filler = Column(String(4))
-    centralAcqSwitch = Column(String(1))
+    centralacqswitch = Column(String(1))
+
 
 class TMPE090(Base):
-    __tablename__ = 'TMPE090'
-
-    id = Column(Integer, primary_key=True)
-    BinLow = Column(String(19))
-    BSApriority = Column(String(1))
-    BSAagreement = Column(String(6))
-    CPI = Column(String(3))
-    BinHi = Column(String(19))
-    CPIpriority = Column(String(2))
+    __tablename__ = 'tmpe090'
+    __table_args__ = (
+        PrimaryKeyConstraint('binlow','binhi','cpi','bsaagreement'),
+            {'prefixes': ['UNLOGGED']}
+        )
+    binlow = Column(String(19))
+    bsapriority = Column(String(1))
+    bsaagreement = Column(String(6))
+    cpi = Column(String(3))
+    binhi = Column(String(19))
+    cpipriority = Column(String(2))
     unknown = Column(String(2))
-    LifeCycleInd = Column(String(1))
-    EnforcementInd = Column(String(1))
+    lifecycleind = Column(String(1))
+    enforcementind = Column(String(1))
 
 class TMPE091(Base):
-    __tablename__ = 'TMPE091'
-
-    id = Column(Integer, primary_key=True)
-    AcquirerBin = Column(String(6))
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
-    CPI = Column(String(3))
+    __tablename__ = 'tmpe091'
+    __table_args__ = (
+        PrimaryKeyConstraint('acquirerbin','bsatype','bsa','cpi'),
+            {'prefixes': ['UNLOGGED']}
+        )
+    acquirerbin = Column(String(6))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
+    cpi = Column(String(3))
     priority = Column(String(2))
-    LifeCycleInd = Column(String(1))
+    lifecycleind = Column(String(1))
     xxx = Column(String(3))
 
 class TMPE092(Base):
-    __tablename__ = 'TMPE092'
-
-    id = Column(Integer, primary_key=True)
-    MTI = Column(String(4))
-    D24 = Column(String(3))
-    busServiveProcSwitch = Column(String(1))
+    __tablename__ = 'tmpe092'
+    __table_args__ = (
+        PrimaryKeyConstraint('mti','d24'),
+            {'prefixes': ['UNLOGGED']}
+        )
+    mti = Column(String(4))
+    d24 = Column(String(3))
+    busserviveprocswitch = Column(String(1))
 
 class TMPE093(Base):
-    __tablename__ = 'TMPE093'
-
-    id = Column(Integer, primary_key=True)
-    accountRange = Column(String(6))
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
+    __tablename__ = 'tmpe093'
+    __table_args__ = (
+        PrimaryKeyConstraint('accountrange','bsatype','bsa'),
+            {'prefixes': ['UNLOGGED']}
+        )    
+    accountrange = Column(String(6))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
 
 class TMPE094(Base):
-    __tablename__ = 'TMPE094'
+    __tablename__ = 'tmpe094'
     id = Column(Integer, primary_key=True)
-    CPI = Column(String(3))
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
-    cnty_overrides = relationship("CntyOverride", back_populates="parent", cascade="all, delete-orphan")
-    region_overrides = relationship("RegionOverride", back_populates="parent", cascade="all, delete-orphan")
-
-class CntyOverride(Base):
-    __tablename__ = 'cnty_override'
-    id = Column(Integer, primary_key=True)
-    ip0094t1_id = Column(Integer, ForeignKey('TMPE094.id'))
-    Country = Column(String(3))
-    life = Column(String(1))
-    parent = relationship("TMPE094", back_populates="cnty_overrides")
-
-class RegionOverride(Base):
-    __tablename__ = 'region_override'
-    id = Column(Integer, primary_key=True)
-    ip0094t1_id = Column(Integer, ForeignKey('TMPE094.id'))
-    region = Column(String(1))
-    life = Column(String(1))
-    parent = relationship("TMPE094", back_populates="region_overrides")
-
+    cpi = Column(String(3))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
+    cntyoveride = Column(JSON)
+    regionoveride = Column(JSON)
+ 
 class TMPE095(Base):
-    __tablename__ = 'TMPE095'
-    id = Column(Integer, primary_key=True)
-    CPI = Column(String(3))
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
-    IRD = Column(String(2))
-    CAB = Column(String(4))
+    __tablename__ = 'tmpe095'
+    __table_args__ = (
+        PrimaryKeyConstraint('cpi','bsatype','bsa','ird','cab'),
+            {'prefixes': ['UNLOGGED']}
+        )   
+    cpi = Column(String(3))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
+    ird = Column(String(2))
+    cab = Column(String(4))
     life = Column(String(1))
 
 class TMPE096(Base):
-    __tablename__ = 'TMPE096'
-    id = Column(Integer, primary_key=True)
+    __tablename__ = 'tmpe096'
+    __table_args__ = (
+        PrimaryKeyConstraint('bsatype','bsa','ird','cpi','prodid'),
+            {'prefixes': ['UNLOGGED']}
+        )  
     seq = Column(String)
-    CPI = Column(String(3))
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
-    IRD = Column(String(2))
-    prodId = Column(String(3))
+    cpi = Column(String(3))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
+    ird = Column(String(2))
+    prodid = Column(String(3))
     life = Column(String(1))
 
 class TMPE097(Base):
-    __tablename__ = 'TMPE097'
-    id = Column(Integer, primary_key=True)
-    CPI = Column(String(3))
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
-    MTI = Column(String(4))
-    FUNC = Column(String(3))
-    D025 = Column(String(4))
-    REV = Column(String(1))
-    CBDOC = Column(String(1))
-    FPIS = Column(String(1))
-    FCMA = Column(String(12))
-    FCMC = Column(String(3))
-    FCMAE = Column(String(1))
+    __tablename__ = 'tmpe097'
+    __table_args__ = (
+        PrimaryKeyConstraint('bsatype','bsa','cpi','mti','func','d025'),
+            {'prefixes': ['UNLOGGED']}
+        )  
+    cpi = Column(String(3))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
+    mti = Column(String(4))
+    func = Column(String(3))
+    d025 = Column(String(4))
+    rev = Column(String(1))
+    cbdoc = Column(String(1))
+    fpis = Column(String(1))
+    fcma = Column(String(12))
+    fcmc = Column(String(3))
+    fcmae = Column(String(1))
 
 class TMPE098(Base):
-    __tablename__ = 'TMPE098'
-    id = Column(Integer, primary_key=True)
-    CPI = Column(String(3))
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
-    MTI = Column(String(4))
-    D24 = Column(String(3))
-    D03 = Column(String(6))
-    REV = Column(String(1))
-    IRD = Column(String(1))
-    EDII = Column(String(1))
-    EROS = Column(String(1))
+    __tablename__ = 'tmpe098'
+    __table_args__ = (
+        PrimaryKeyConstraint('bsatype','bsa','cpi','mti','d24','d03'),
+            {'prefixes': ['UNLOGGED']}
+        )  
+    cpi = Column(String(3))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
+    mti = Column(String(4))
+    d24 = Column(String(3))
+    d03 = Column(String(6))
+    rev = Column(String(1))
+    ird = Column(String(1))
+    edii = Column(String(1))
+    eros = Column(String(1))
 
 class TMPE099(Base):
-    __tablename__ = 'TMPE099'
+    __tablename__ = 'tmpe099'
     id = Column(Integer, primary_key=True)
-    CPI = Column(String(3))
-    BSAtype = Column(String(1))
-    BSA = Column(String(6))
-    CCY = Column(String(3))
+    cpi = Column(String(3))
+    bsatype = Column(String(1))
+    bsa = Column(String(6))
+    ccy = Column(String(3))
 
 class TMPE137(Base):
-    __tablename__ = 'TMPE137'
+    __tablename__ = 'tmpe137'
     id = Column(Integer, primary_key=True)
-    LOW = Column(String(16))
-    HI = Column(String(16))
-    REG = Column(String(1))
-    CPI = Column(String(3))
-    BSA = Column(String(3))
-    PLUS = Column(String(1))
+    low = Column(String(16))
+    hi = Column(String(16))
+    reg = Column(String(1))
+    cpi = Column(String(3))
+    bsa = Column(String(3))
+    plus = Column(String(1))
 
 # Mapping of table IDs to model classes
 TABLE_MODEL_MAP = {
@@ -651,4 +662,5 @@ TABLE_MODEL_MAP = {
 
 def get_model_by_tableid(tableid: str):
   """Return the SQLAlchemy model class based on the table ID."""
+ 
   return TABLE_MODEL_MAP.get(tableid.upper())

@@ -11,6 +11,8 @@
 import datetime ,io, configparser,json,os,sys
 from Common import config
 
+ 
+
 from sqlalchemy import create_engine, Column, Integer, String, delete, MetaData, select
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session, declarative_base
@@ -54,11 +56,6 @@ class MPEprocess(object):
      except Exception as e:
         print(f"Connection failed: {e}")
         
-     self.metadata = MetaData()
-     self.metadata.reflect(bind=self.engine)
-
-
-
   
  
    def setConfig(self,runParms:config.Loader) -> bool:
@@ -115,10 +112,26 @@ class MPEprocess(object):
   #    return True
 
    ''' Load MPE file and decode based on MPEmapper.json and IO via TMPEsql settings '''
+
+   def clearTables(self) -> bool:
+      
+      for tbl in self.MPEmapper.keys():
+         tableObj=TMPEsql.get_model_by_tableid(tbl)
+         if tableObj != None:
+          print('Clearing table ',tbl)
+          tableObj=TMPEsql.get_model_by_tableid(tbl)
+          self.session.query(tableObj).delete()
+      self.session.commit()
+      return True   
+      
+
+
    def LoadFile(self,mpeName):
      self.mpeName=mpeName
      ts=datetime.datetime.now()
-     
+     tblts=datetime.datetime.now()
+     newTable=True
+
      try:
         if self.verbose : print('V: Loading MPE - ',mpeName)
         tableCnt=0
@@ -131,15 +144,15 @@ class MPEprocess(object):
                eol='\n'
             else:
                raise IOError("Check File {} Format, No CRLF/EOL Found".format(mpeName))
-            
+
             mpeRec=mpeRecBytes.decode('utf-8')
             status=mpeRec[10:11]
-            tableid=mpeRec[11:19]
+            hdrid=mpeRec[11:19]
             fileCnt+=1
 
             # Check Headers and trailers
-            if tableid == ' FILE IP' :
-                print(tableid,' :FILEIP: ',mpeRec)
+            if hdrid == ' FILE IP' :
+                print(hdrid,' :FILEIP: ',mpeRec)
                 if mpeRec[:19].find('UPDATE') > -1:
                   if self.verbose : print('Loading UPDATE MPE file')
                   self.FullReplacement=False
@@ -151,27 +164,55 @@ class MPEprocess(object):
             elif mpeRec[:19].find('TRAILER') > -1:
                   if tableCnt > 0:
                     self.session.merge(TMPEsql.TMPE000(tableid=tableid,processedrows=tableCnt,mpename=mpeName) )
-                  tableCnt=0
                   self.session.commit()
-              
-            elif tableid == 'IP0000T1' and status == 'A' :
-              decodedRec=self.__decodeEntry(tableid,mpeRec)
-              if self.verbose : print(tableid,'--',decodedRec)
-              self.session.add(TMPEsql.TMPE000(**decodedRec) )
-              tableCnt+=1
+                  if tableCnt >= 1:
+                    print('Processed Table ',tableid,'   Duration:',datetime.datetime.now()-tblts,'   Inserts:',tableCnt)
+                  tblts=datetime.datetime.now()
+                  tableCnt=0
+                  newTable=True
 
-            elif tableid in self.MPEmapper and status == 'A' :
-              tableObj=TMPEsql.get_model_by_tableid(tableid)
-              if tableObj != None:
+            else: 
+              tableid=mpeRec[11:19]
+
+              # if newTable:
+              #    if self.FullReplacement:
+              #       tableObj=TMPEsql.get_model_by_tableid(tableid)
+              #       if tableObj != None:
+              #         self.session.query(tableObj).delete()
+              #         self.session.commit()
+              #         # print(tableid,': Table Cleared', self.session.query(tableObj).count() )
+
+              newTable=False   
+
+              if tableid == 'IP0000T1' and status == 'A' :
                 decodedRec=self.__decodeEntry(tableid,mpeRec)
-                DBdecoded = {k.lower(): v for k, v in decodedRec.items()}
-                self.session.merge(tableObj(**DBdecoded) )
-                
-              tableCnt+=1
+                if self.verbose : print(tableid,'--',decodedRec)
+                self.session.add(TMPEsql.TMPE000(**decodedRec) )
+                tableCnt+=1
+
+              elif tableid in self.MPEmapper and status == 'A' :
+                tableObj=TMPEsql.get_model_by_tableid(tableid)
+                if tableObj != None:
+                  decodedRec=self.__decodeEntry(tableid,mpeRec)
+                  DBdecoded = {k.lower(): v for k, v in decodedRec.items()}
+
+                  if self.FullReplacement:
+                    self.session.add(tableObj(**DBdecoded) )
+                  else:  
+                    self.session.merge(tableObj(**DBdecoded) )
+
+                tableCnt+=1
+                if tableCnt % 50000 == 0:
+                   #print(tableid,':',tableCnt,' Part Commit')
+                   self.session.commit()
             
      except Exception as ex:
-       raise IOError(ex) from ex
+       print(tableid,'(',tableCnt,') : ',ex)
+       
+       return False
+       #raise IOError(ex) from ex
 
+     print('Commiting File')
      self.session.commit()
      
      if self.verbose : print(' File',mpeName,'Processed    Records:',fileCnt,'    Duration:',datetime.datetime.now()-ts )
@@ -311,8 +352,8 @@ class MPEprocess(object):
           print('Error :', ex)
           print('Ofset :',ofs,':  Idx',loopIdx,':  Tot',loopTot)
           print('Loop  :',loop)
-          print('stub  :',self.stub) 
-          print('Rec   :',self.Frec) 
+          print('stub  :',self.stub)
+          print('Rec   :',self.Frec)
           return False
 
      return recJS
@@ -329,19 +370,19 @@ class MPEprocess(object):
   #   except Exception as ex:
   #      print("tmpe000 Clear Error :",ex)
 
-   def __preMPErec(self,rec):
-     ln=0
-     rec=rec.replace(b'\xa0',b'@')
-     for chr in rec.decode('utf-8'):
-       if hex(ord(chr)) == '0x0': break
-       ln+=1
-     if ln != len(rec):
-       if self.verbose : print('D: MPE:MPErecCLS: Low-Values Found in Record')
-       rec=rec[:ln]
-     lv=rec.find(b"'")
-     if lv >=0:
-        rec=rec.replace(b"'",b" ")
-     return rec.decode('utf-8')
+  #  def __preMPErec(self,rec):
+  #    ln=0
+  #    rec=rec.replace(b'\xa0',b'@')
+  #    for chr in rec.decode('utf-8'):
+  #      if hex(ord(chr)) == '0x0': break
+  #      ln+=1
+  #    if ln != len(rec):
+  #      if self.verbose : print('D: MPE:MPErecCLS: Low-Values Found in Record')
+  #      rec=rec[:ln]
+  #    lv=rec.find(b"'")
+  #    if lv >=0:
+  #       rec=rec.replace(b"'",b" ")
+  #    return rec.decode('utf-8')
    
   #  # Call at the end of the file to set header dates
   #  def __fileComplete(self):
@@ -351,26 +392,26 @@ class MPEprocess(object):
   #    # self.DB.commit()
    
    # Return key off set as defined by IP0000T1 
-   def __tabkey(self) -> TMPEsql.TMPE000:
-     if self.getTAB() == 'IP0000T1':   return self.getREC()[0:8]
-     if self.getTAB() == self.TABkey : return self.getFULL()[self.KYofs:self.KYofe]
+  #  def __tabkey(self) -> TMPEsql.TMPE000:
+  #    if self.getTAB() == 'IP0000T1':   return self.getREC()[0:8]
+  #    if self.getTAB() == self.TABkey : return self.getFULL()[self.KYofs:self.KYofe]
 
-     try:
-        results = self.session.query(TMPEsql.TMPE000).filter(TMPEsql.TMPE000.tableid == self.getTAB() ).one_or_none()
-        return results
-     except Exception as ex:
-        print('__tabkey: Error ',ex)
+  #    try:
+  #       results = self.session.query(TMPEsql.TMPE000).filter(TMPEsql.TMPE000.tableid == self.getTAB() ).one_or_none()
+  #       return results
+  #    except Exception as ex:
+  #       print('__tabkey: Error ',ex)
      
-    #  # cols,rows=self.DB.getSQL("SELECT recjs from TMPE000 where tabid='IP0000T1' and key='{}'".format(self.getTAB()) )
-    #  if len(results) == 0 : 
-    #     self.status=self.getTAB()+' Not found in IP0000T1'
-    #     return ''
-    #  else:
-    #     ofs=int(results[0].keyofs)+10
-    #     ofe=int(results[0].keylength)
-    #     self.TABkey = self.getTAB()
-    #     self.KYofs = ofs
-    #     self.KYofe = ofe
-    #     return self.getFULL()[ofs:ofe]
+  #   #  # cols,rows=self.DB.getSQL("SELECT recjs from TMPE000 where tabid='IP0000T1' and key='{}'".format(self.getTAB()) )
+  #   #  if len(results) == 0 : 
+  #   #     self.status=self.getTAB()+' Not found in IP0000T1'
+  #   #     return ''
+  #   #  else:
+  #   #     ofs=int(results[0].keyofs)+10
+  #   #     ofe=int(results[0].keylength)
+  #   #     self.TABkey = self.getTAB()
+  #   #     self.KYofs = ofs
+  #   #     self.KYofe = ofe
+  #   #     return self.getFULL()[ofs:ofe]
 
 

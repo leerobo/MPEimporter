@@ -34,7 +34,7 @@
        "IP0008T1":  [
               {"field":"PDS","length":4},
               {"field":"name","length":57},
-              {"field":"foramt","length":3},
+              {"field":"format","length":3},
               {"field":"MIN","length":3},
               {"field":"MAX","length":3},
               {"field":"subIndex","length":2}

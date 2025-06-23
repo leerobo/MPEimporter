@@ -115,13 +115,15 @@ def main():
           FULLname=dd
 
    mpe=MPE.MPEprocess(args)    # loadin MPE Decoder
+   mpe.setVerbose(args.verbose)
    mpe.setConfig(gConfigParms) # set connfig parameters
 
    # Rebuild MPE tables from latest MPE >>FULL<< file
 
    if args.ALL or args.FULLONLY :
       if args.verbose : print('V: MPE Full Replacment ',FULLname) 
-      if not mpe.LoadFile(FULLname) : return 8  #  Load full with bulk option Set
+      mpe.clearTables()                          # Clear all TMPE tables
+      if not mpe.LoadFile(FULLname) : return 8   # Load full with bulk option Set
 
    print('FullDate:',FULLdate)
 
