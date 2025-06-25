@@ -257,8 +257,8 @@
        ],
        "IP0058T1":  
               [
-              {"FullOnly":true},              
-              {"mode":"fullonly"}, 
+              {"fullonly":true}, 
+              {"allowduplicatekey":false}, 
               {"field":"CPI","length":3},
               {"field":"CBtype","length":1},
               {"field":"MCC","length":5},
@@ -331,7 +331,7 @@
               {"field":"MCCtype","length":1},
               {"field":"flag","length":1}
        ],
-       "ZP0078T1":  [
+       "IP0078T1":  [
               {"field":"CPI","length":3},
               {"field":"BSAT","length":1},
               {"field":"BSC","length":6},

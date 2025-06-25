@@ -617,6 +617,24 @@ class TMPE137(Base):
     bsa = Column(String(3))
     plus = Column(String(1))
 
+# Complete MPE relfex
+class TMPE9999(Base):
+    __tablename__ = 'tmpe9999'
+    __table_args__ = (
+        PrimaryKeyConstraint('tableid','mpekey'),
+            {'prefixes': ['UNLOGGED']}
+        )
+    tableid    = Column(String(8))
+    mpekey     = Column(Text) 
+    dte        = Column(String(12))
+    status     = Column(String(1))
+    source     = Column(Text)
+    task       = Column(String(1))
+    record     = Column(Text)
+    recordjson = Column(JSON)
+
+# ----------------------------------------------------------------------
+
 # Mapping of table IDs to model classes
 TABLE_MODEL_MAP = {
    'IP0000T1': TMPE000,
