@@ -87,7 +87,7 @@ def findMPEmode(tbl):
 def main():
    FULLname=''
 
-   startTS=datetime.datetime.now()           # Ready Steady Go
+   ts=datetime.datetime.now()           # Ready Steady Go
    if not gConfigParms.isLoaded():   return 8
 
    # Find the latest T*68 Full replacement based on MC file name
@@ -108,12 +108,13 @@ def main():
    #   MPEmapper holds the sequencal decoders for each MPE field within selected tables
    #   TMPEsql holds the SQLalchemy definition models 
    #  -- Note keep the fiels inline between MPEmapping and SQLalchemy settings --
-   mpe=MPE.MPEprocess(args)       # loadin MPE Decoder
+   mpe=MPE.MPEprocess(gConfigParms)  # loadin MPE Decoder
    mpe.setVerbose(args.verbose)
-   mpe.setConfig(gConfigParms)    # set Decoder config parameters
+   # mpe.setConfig(gConfigParms)       # set Decoder config parameters
 
 
    if not args.NO_MPEUPD:
+      tsmpe=datetime.datetime.now()
       # Rebuild MPE tables in TMPE9999 from latest MPE >>FULL<< file if set to RELOAD
       if args.RELOAD:
          if args.verbose : print('V: MPE Full Replacment ',FULLname) 
@@ -125,34 +126,31 @@ def main():
       ddir.sort()
       for dd in ddir:
          if dd.find('T067')!=-1 or dd.find('T167')!=-1:  
-            if int(dd.split('.')[5][1:]) >= int(FULLdate): 
+            if int(dd.split('.')[5][1:]) > int(FULLdate): 
                if args.verbose : print('V: MPE update ',dd)
                if not mpe.LoadMPE(dd) :
                   print('************* Failed *************')
                   return 8           
+      print('MPEimport : MPE load - Duration ',datetime.datetime.now() - tsmpe)               
 
-   # Split off select MPE tables to seperate DB Tables to help
-   # speed up the GUI reference and scriptings processing 
+   # Build an Seq IXMP (See Config) for Batch processing 
+   # This is a mirror of the MPE but only select mapped tables
+   if not args.NO_IXMP or args.RELOAD  :  
+      tsmpe=datetime.datetime.now()
+      mpe.LoadIXMP()
+      print('MPEimport : IXMP Build - Duration ',datetime.datetime.now() - tsmpe)               
+
+   # TMPE tables are used on GUI/API services (Not Batch) and 
+   # are indexed for speed
+   if not args.NO_TMPE or args.RELOAD  :  
+      tsmpe=datetime.datetime.now()
+      mpe.LoadTABLES()
+      print('MPEimport : TMPE Table Build - Duration ',datetime.datetime.now() - tsmpe)               
 
 
-   if not args.NO_IXMP or args.RELOAD  :  mpe.LoadIXMP()
-   
-   if not args.NO_TMPE or args.RELOAD  :  mpe.LoadTABLES()
-
-   # if args.IXMP or args.BUILD : BuildIXMP()
-   # if args.T40 or args.BUILD  : BuildT40()
-   # if args.T41 or args.BUILD  : BuildT41()
-   # if args.T72 or args.BUILD  : BuildT72()
-   # #if args.T75 or args.BUILD  : BuildT75()   # MCC/CABS
-   # if args.T90 or args.BUILD  : BuildT90()
-   # if args.T91 or args.BUILD  : BuildT91()
-   # #if args.T137 or args.BUILD  : BuildT137()  # 2024Q2
+   print('MPEimport : Duration ',datetime.datetime.now() - ts)
 
    return 0
-
- 
-
- 
 
 # MPE processor 
 
@@ -169,7 +167,7 @@ if __name__=="__main__":
 
    parser.add_argument('--ENV',       nargs='?',  help='Config Level (PRODUCTION/TEST)',default='PRODUCTION')
    
-   parser.add_argument('--VALIDATE', action='store_true',  help='Validate The Extract Details After Process')
+   # parser.add_argument('--VALIDATE', action='store_true',  help='Validate The Extract Details After Process')
 
    args = parser.parse_args()
    print(args)

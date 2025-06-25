@@ -23,9 +23,7 @@ import Models.sqlAlchemy.TMPEsql as TMPEsql
 
 
 class MPEprocess(object):
-    def __init__(self, args):
-        self.args = args
-        print("MPEprocess", args)
+    def __init__(self, runParms: config.Loader=None):
         # self.Rsrc = "UNK"
         # self.Frec = ""
         # self.mpeName = ""
@@ -38,30 +36,48 @@ class MPEprocess(object):
         # self.bulkRec = [] * 50000
         # self.useBulk = False
         self.FullReplacement = False
+        self.verbose = False        
+        self.runParms = runParms
+        self.engine = None
+        self.blocks = 20000
+
         # self.stub = ""
         # self.DB=EC.DataBase()                        #  Generic DB routine
         # self.MPEconfig=MPE.json
         MPEmapper = io.open("./Models/MPEmapper.json", "r")
         self.MPEmapper = json.loads(MPEmapper.read())
-        self.verbose = False
-
-        DATABASE_URL = "postgresql://postgres:1970Terry@localhost:5432/postgres"
-        self.engine = create_engine(DATABASE_URL, echo=False)  # True shows log
-        self.Session = sessionmaker(bind=self.engine)
-        # self.session = Session(bind=self.engine)
-        try:
-            connection = self.engine.connect()
-            print("DB Connection successful!")
-            connection.close()
-            sqlAbase = declarative_base()
-            sqlAbase.metadata.create_all(self.engine)
-        except Exception as e:
-            print(f"Connection failed: {e}")
+        self.applyConfigs()
 
     def setConfig(self, runParms: config.Loader) -> bool:
-        """ Load the Config Settings into MPE processor """
+        """ Load the Config.yml Settings into MPE processor """
         self.runParms = runParms
+        self.applyConfigs()
         return True
+    
+    def applyConfigs(self):
+          
+          if self.runParms.get("blocks") < 1000:
+             print('Config Warning : Blocks too Low to be effective')
+          else:
+             self.blocks=self.runParms.get("blocks")
+
+          if self.runParms == None : 
+              self.engine = None
+              return
+
+          if self.engine != None : self.engine.disconnect()
+          DATABASE_URL = self.runParms.get("database")
+          self.engine = create_engine(DATABASE_URL, echo=False)  # True shows log
+          self.Session = sessionmaker(bind=self.engine)
+
+          # connection = self.engine.connect()
+          # print("DB Connection successful!")
+          # connection.close()
+          # sqlAbase = declarative_base()
+          # sqlAbase.metadata.create_all(self.engine)          
+
+
+
 
     def setVerbose(self, verbose: bool):
         """ Set to true to receive more log output during processing """
@@ -322,11 +338,11 @@ class MPEprocess(object):
 
                       recCnt=0
                       print(f"\r",tableid,':',idxRows.description,'  -  Last Updated :',idxRows.createdate,'from',idxRows.mpename,' ... Applying ',end="",flush=True)
-                      for tmpeRow in session.query(TMPEsql.TMPE9999).filter(TMPEsql.TMPE9999.tableid==tableid).order_by(TMPEsql.TMPE9999.mpekey).yield_per(20000):
+                      for tmpeRow in session.query(TMPEsql.TMPE9999).filter(TMPEsql.TMPE9999.tableid==tableid).order_by(TMPEsql.TMPE9999.mpekey).yield_per(self.blocks):
                         #print('\n---------------------------------\n','JSON',tmpeRow.recordjson,'\nKEY',tmpeRow.mpekey)
                         session.add( tableObj(**tmpeRow.recordjson) )
                         recCnt+=1
-                        if recCnt % 20000 == 0:
+                        if recCnt % self.blocks == 0:
                            print(f"\r",tableid,':',idxRows.description,'  -  Last Updated :',idxRows.createdate,'from',idxRows.mpename,' ... Applying ',recCnt,end="",flush=True)
                       session.commit()
                       print(f"\r",tableid,':',idxRows.description,'  -  Last Updated :',idxRows.createdate,'from',idxRows.mpename,' ... Complete ',recCnt)
@@ -351,10 +367,10 @@ class MPEprocess(object):
             print(f"\rIXMP Build : Extracting Records ",end="",flush=True)
             with self.session_scope() as session:  # Setup a DB Session
               totalRec=session.query(TMPEsql.TMPE9999).filter(TMPEsql.TMPE9999.tableid!='*SYSTEM*',TMPEsql.TMPE9999.tableid!='IP0000T1').count()
-              for ixmpRow in session.query(TMPEsql.TMPE9999).filter(TMPEsql.TMPE9999.tableid!='*SYSTEM*',TMPEsql.TMPE9999.tableid!='IP0000T1').order_by(TMPEsql.TMPE9999.tableid,TMPEsql.TMPE9999.mpekey).yield_per(20000):
+              for ixmpRow in session.query(TMPEsql.TMPE9999).filter(TMPEsql.TMPE9999.tableid!='*SYSTEM*',TMPEsql.TMPE9999.tableid!='IP0000T1').order_by(TMPEsql.TMPE9999.tableid,TMPEsql.TMPE9999.mpekey).yield_per(self.blocks):
                 ixmpOut.write(ixmpRow.dte[:10]+ixmpRow.status+ixmpRow.record)
                 recCnt+=1
-                if recCnt % 100000 == 0 :
+                if recCnt % (self.blocks * 4) == 0 :
                     print(f"\rIXMP Build : Extracting ",totalRec,"   Applied ",recCnt,end="", flush=True)
 
         except Exception as ex:

@@ -6,10 +6,13 @@ PRODUCTION :
   working :   /aci_cmm/ACI01/ICG/NETCT/files/LandingArea/Bin/wrk
   ixmp    :   /aci_cmm/ACI01/ICG/NETCT/files/LandingArea/Bin/wrk
   new     :   /aci_cmm/ACI01/ICG/NETCT/files/LandingArea/Bin
-  database:   postgresql://user:postgres@localhost:5432/MPE'
+  database:   postgresql://postgres:postgres@localhost:5432/icgs
+  blocks  :   70000
 
 TEST :
   working :   data/wrk
   new     :   data/new
   ixmp    :   data
+  database:   postgresql://postgres:1970Terry@localhost:5432/postgres
+  blocks  :   10000
 
