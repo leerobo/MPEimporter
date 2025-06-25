@@ -7,12 +7,12 @@ PRODUCTION :
   ixmp    :   /aci_cmm/ACI01/ICG/NETCT/files/LandingArea/Bin/wrk
   new     :   /aci_cmm/ACI01/ICG/NETCT/files/LandingArea/Bin
   database:   postgresql://postgres:postgres@localhost:5432/icgs
-  blocks  :   70000
+  blocks  :   100000
 
 TEST :
   working :   data/wrk
   new     :   data/new
   ixmp    :   data
   database:   postgresql://postgres:1970Terry@localhost:5432/postgres
-  blocks  :   10000
+  blocks  :   1000
 

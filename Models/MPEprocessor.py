@@ -61,7 +61,7 @@ class MPEprocess(object):
           else:
              self.blocks=self.runParms.get("blocks")
 
-          if self.runParms == None : 
+          if self.runParms == None :
               self.engine = None
               return
 

@@ -44,8 +44,14 @@ SQL URL connection string
 (Do not put raw passwords here and up load to GH,create your own and place it within the ignore)
 #### - block
 This is the amount of MPE records that are in memory at any point in time,  the system will read the rows from MPE in blocks , process them and commit to DB.  in test this block is smaller due to memory limits,  in production is can be higher so making the MPEimporter slightly quicker .  
-note: 20000-30000 works ok on test but over 70000 the system slowed down (WSL), but between 50000-80000 worked quicker on production (redHat). 
 
+Some Blocks to time
+  WSL - block at 1K    >> TMPE Table Build - Duration  0:14:08.591591
+  WSL - block at 10K   >> TMPE Table Build - Duration  0:09:26.516518
+  WSL - block at 20k   >> TMPE Table Build - Duration  0:10:01.818314
+  WSL - block at 100K  >> TMPE Table Build - Duration  0:10:54.527488
+
+0:10:01.818314
 ### CLI 
 
 #### Python Venv setup
